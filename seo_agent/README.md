@@ -3,10 +3,10 @@
 A clean, modular FastAPI service that analyzes the top 10 (mocked) search results for a keyword, crawls pages, compares them with your target URL, and produces structured SEO insights and AI-style suggestions.
 
 ## Features
-- SERP fetching (mock) with replaceable provider
-- Web crawler using Requests + BeautifulSoup
+- SERP fetching using Gemini AI to discover real, ranking URLs
+- Web crawler using Requests + BeautifulSoup for real content extraction
 - Analyzer: word counts, common keywords, common headings
-- AI suggestions (simulated, no external API calls)
+- AI suggestions using Gemini AI for high-quality, data-driven insights
 - Single API endpoint: POST /analyze
 - Clean architecture and type hints
 
@@ -65,7 +65,7 @@ uvicorn seo_agent.app.main:app --reload
 ```bash
 curl -X POST http://127.0.0.1:8000/analyze \
   -H "Content-Type: application/json" \
-  -d '{"keyword": "nafasi za kazi", "url": "https://example.com"}'
+  -d '{"keyword": "nafasi za kazi", "url": "https://www.ajiriwa.net/browse-jobs"}'
 ```
 
 ## Response Shape
@@ -79,9 +79,9 @@ curl -X POST http://127.0.0.1:8000/analyze \
 ```
 
 ## Notes
-- SERP results are mocked and deterministic per keyword to avoid scraping Google.
-- Crawler uses conservative timeouts and error handling.
-- Analyzer and AI suggestions avoid heavy processing and are ready for future extensions (e.g., OpenAI, real SERP API, Playwright).
+- SERP results are fetched by asking Gemini AI for currently ranking URLs for a given keyword.
+- Web crawler visits real URLs to extract text and structure.
+- AI suggestions are powered by a Gemini AI integration in `/var/www/node_projects/google-gemini/index.js`.
 
 ## Tests
 - Placeholder for future tests under `tests/`.
